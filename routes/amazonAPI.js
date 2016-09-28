@@ -1,6 +1,6 @@
 'use strict'
 
-require('dotenv').config({path: '../.env'});
+require('dotenv').config();
 
 const request = require('request');
 const amazon = require('amazon-product-api');
