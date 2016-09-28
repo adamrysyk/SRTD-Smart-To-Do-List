@@ -11,15 +11,16 @@ var client = amazon.createClient({
   awsTag: process.env.amazonTAG
 });
 
+var bookName = process.argv[2];
+
 client.itemSearch({
   SearchIndex: "Books",
-  Title: "Pizza Pizza"
-
+  Title: bookName
 }, function(err, results, response) {
   if (err) {
     console.log(err);
   } else {
-    console.log(results[0].ItemAttributes[0]);  // products (Array of Object)
+    console.log(results[0].ItemAttributes[0].Title);  // products (Array of Object)
     // console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
   }
 });
