@@ -15,7 +15,7 @@ fetch(`https://developers.zomato.com/api/v2.1/search?q=${restName}`, options, fu
   if (err) {
     throw err
   }
-  console.log(JSON.parse(body.toString()).restaurants[0].restaurant.location);
+  console.log(JSON.parse(body.toString()).restaurants[0].restaurant);
 })
 
 // app.get("/search", (req, res) => {
