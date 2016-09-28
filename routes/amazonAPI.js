@@ -1,12 +1,14 @@
 'use strict'
 
+require('dotenv').config({path: '../.env'});
+
 const request = require('request');
 const amazon = require('amazon-product-api');
 
 var client = amazon.createClient({
-  awsId: "AKIAJPF73MSQ4VL6JQ7Q",
-  awsSecret: "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",
-  awsTag: 'testing123456'
+  awsId: process.env.amazonID,
+  awsSecret: process.env.amazonSECRET,
+  awsTag: process.env.amazonTAG
 });
 
 client.itemSearch({
