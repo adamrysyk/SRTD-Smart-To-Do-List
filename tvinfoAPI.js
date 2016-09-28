@@ -1,5 +1,5 @@
 'use strict';
-require('dotenv').config({path: '../.env'});
+
 // npm install node-movie --save
 
 const movie = require('node-movie');

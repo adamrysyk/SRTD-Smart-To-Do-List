@@ -1,6 +1,5 @@
 "use strict";
-
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({path: '../../.env'});
 var fetch = require("fetch").fetchUrl;
 
 // console.log(process.env.userkey)
