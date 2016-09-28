@@ -1,12 +1,15 @@
 "use strict";
-
+require('dotenv').config({path: '../../.env'});
 var fetch = require("fetch").fetchUrl;
+
+// console.log(process.env.userkey)
+
 
 const restName = process.argv[2]
 
 var options = {
   headers: {
-    'user-key': 'df7f3c92ba09f0f670e19da05a538ff9'
+    'user-key': process.env.userkey
   }
 }
 
