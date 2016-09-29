@@ -3,11 +3,12 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('items', function (table) {
     table.increments('items_id');
     table.integer('list_id').unsigned()
-    table.foreign('list_id').references('lists.list_id')
     table.string('list_kind')
+    table.string('items')
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('users');
+  return knex.schema.dropTableIfExists('items');
 };
+
