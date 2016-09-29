@@ -1,13 +1,31 @@
 "use strict";
 
+require('dotenv').config();
 
+const fetch = require("fetch").fetchUrl;
+const request = require('request');
+const amazon = require('amazon-product-api');
 const express = require('express');
 const router  = express.Router();
+const movie = require('node-movie');
+
+var client = amazon.createClient({
+  awsId: process.env.amazonID,
+  awsSecret: process.env.amazonSECRET,
+  awsTag: process.env.amazonTAG
+});
+
+var options = {
+  headers: {
+    'user-key': process.env.userkey
+  }
+}
+
 
 module.exports = (knex) => {
 
   router.get("/", (req, res) => {
-    knex
+    kne
       .select("*")
       .from("users")
       .then((results) => {
@@ -15,18 +33,27 @@ module.exports = (knex) => {
     });
   });
 
+
+  router.get("/searchMovie", (req, res) => {
+
+    movie("Harry Potter", function (err, data) {
+
+        console.log(data);
+
+        res.json(data);
+    });
+  });
+
   router.get("/search", (req, res) => {
-    client.itemSearch({
-      SearchIndex: "Books",
-      Title: bookName
-    }, function(err, results, response) {
-      if (err) {
-       console.log(err);
-     } else {
-      console.log(results[0].ItemAttributes[0].Title);  // products (Array of Object)
-      // console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
-     }
-   });
+
+  fetch(`https://developers.zomato.com/api/v2.1/search?q=Mcdonalds`, options, function(err, response, body) {
+    if (err) {
+      throw err
+    }
+    console.log(JSON.parse(body.toString()).restaurants[0].restaurant);
+
+    res.json(JSON.parse(body.toString()).restaurants[0].restaurant);
+    });
   });
 
   return router;
