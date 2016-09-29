@@ -1,59 +1,61 @@
 'use strict';
-require('dotenv').config({path: '../.env'});
 const fetch = require("fetch").fetchUrl;
-const movieAPI = require('node-movie');
+const movie = require('node-movie');
+var books = require('google-books-search');
+
 
 const options = {
-  headers: {
-    'user-key': process.env.userkey
+headers: {
+  'user-key': process.env.userkey
   }
 }
 
-// const searchAll = function(todo, movie, rest){
-//   let resultObj = {}
-//   resultObj['movie'] = movie(todo)
-//   resultObj['restaurant'] = rest(todo)
-//   return resultObj;
-// }
+const searchRestauraunt = function(todo) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://developers.zomato.com/api/v2.1/search?q=${todo}`, options, function(err, response, body) {
+      if(err) { reject("error")}
+      if (!JSON.parse(body.toString()).restaurants[0]){
+        resolve("not found")
+      } else if (JSON.parse(body.toString()).restaurants[0].restaurant.name) {
+        resolve({restauraunt: JSON.parse(body.toString()).restaurants[0].restaurant.name});
+      } else {
+        resolve("not found")
+      }
+    });
+  });
+}
 
-movieAPI('Terminator', (err, data)=> {
-  return data.Title
-})
+const searchMovie = function(todo) {
+  return new Promise((resolve, reject) => {
+    movie(todo, (err, data) => {
+      if (err) { reject("error")}
+      if (data.Title) {
+        resolve({movie: data.Title});
+      } else {
+        resolve("not found")
+      }
+    });
+  });
+}
 
+const searchBooks = function(todo) {
+  return new Promise((resolve, reject) => {
+    books.search(todo, (err, results) => {
+      if (err) { reject("error")}
+      if (results[0].title) {
+        resolve({book: results[0].title})
+      } else {
+        resolve({book: null})
+      }
+    });
+  });
+}
 
-
-
-
-
-
-// let movie = function(input){
-//   let result
-//   movieAPI(input, (err, data)=> {
-//     result = data.Title;
-//   });
-//   return result
-// };
-
-// console.log(movie('Ghostbusters'))
-
-
-
-// let restaurant = function(input){
-//   let result
-//   fetch(`https://developers.zomato.com/api/v2.1/search?q=${input}`, options, function(err, response, body) {
-//     if (err) {
-//       throw err
-//     }
-//     return
-//     result = JSON.parse(body.toString()).restaurants[0].restaurant.name
-//   })
-//   console.log(result)
-// }
-
-// restaurant('Subway')
-// console.log(restaurant('Subway'))
-
-
+module.exports = {
+  searchRestauraunt: searchRestauraunt,
+  searchMovie: searchMovie,
+  searchBooks: searchBooks
+}
 
 
 
