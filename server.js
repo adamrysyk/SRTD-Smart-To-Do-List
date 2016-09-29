@@ -43,8 +43,33 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/items", (req, res) => {
+  knex.select()
+  .from('items')
+  .where('list_kind', "MOVIES")
+  .then((result) => {
+    res.json(result);
+  })
+});
+
 app.get("/lists", (req, res) => {
   res.render("buttons");
+});
+
+app.get("/lists/books", (req, res) => {
+  res.render("books_list");
+});
+
+app.get("/lists/movies", (req, res) => {
+  res.render("movies_list");
+});
+
+app.get("/lists/tvshows", (req, res) => {
+  res.render("tvshows_list");
+});
+
+app.get("/lists/restaurants", (req, res) => {
+  res.render("restaurants_list");
 });
 
 app.listen(PORT, () => {
