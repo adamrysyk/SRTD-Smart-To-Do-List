@@ -7,32 +7,4 @@ exports.seed = function(knex, Promise) {
         knex('users').insert({user_id: 3, first_name: 'BEN', last_name: 'CHU', email: 'ilovecoding@hotmail.com', password: '0000'})
       ])
     })
-  return knex('lists').del()
-    .then(function () {
-      return Promise.all([
-        knex('lists').insert({user_id: 1, list_kind: 'MOVIES'}),
-        knex('lists').insert({user_id: 1, list_kind: 'BOOKS'}),
-        knex('lists').insert({user_id: 1, list_kind: 'RESTAURANTS'}),
-        knex('lists').insert({user_id: 2, list_kind: 'MOVIES'}),
-        knex('lists').insert({user_id: 2, list_kind: 'BOOKS'}),
-        knex('lists').insert({user_id: 2, list_kind: 'RESTAURANTS'}),
-        knex('lists').insert({user_id: 3, list_kind: 'MOVIES'}),
-        knex('lists').insert({user_id: 3, list_kind: 'BOOKS'}),
-        knex('lists').insert({user_id: 3, list_kind: 'RESTAURANTS'})
-      ])
-    })
-  return knex('items').del()
-    .then(function () {
-      return Promise.all([
-        knex('items').insert({list_id: 1, list_kind: 'MOVIES', items: 'Mr. Bean'}),
-        knex('items').insert({list_id: 1, list_kind: 'BOOKS', items: 'Harry Potter'}),
-        knex('items').insert({list_id: 1, list_kind: 'RESTAURANTS', items: 'Georges Diner'}),
-        knex('items').insert({list_id: 2, list_kind: 'MOVIES', items: 'Star Wars'}),
-        knex('items').insert({list_id: 2, list_kind: 'BOOKS', items: 'Lord of the Rings'}),
-        knex('items').insert({list_id: 2, list_kind: 'RESTAURANTS', items: 'Subway'}),
-        knex('items').insert({list_id: 3, list_kind: 'MOVIES', items: 'Ironman'}),
-        knex('items').insert({list_id: 3, list_kind: 'BOOKS', items: 'Watchmen'}),
-        knex('items').insert({list_id: 3, list_kind: 'RESTAURANTS', items: 'Black Canary Cafe'})
-      ]);
-    });
 };
