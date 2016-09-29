@@ -25,7 +25,7 @@ var options = {
 module.exports = (knex) => {
 
   router.get("/", (req, res) => {
-    kne
+    knex
       .select("*")
       .from("users")
       .then((results) => {

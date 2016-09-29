@@ -14,6 +14,8 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const searchAPI   = require('./routes/searchAPI-Pall')
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -46,6 +48,23 @@ app.get("/", (req, res) => {
 app.get("/lists", (req, res) => {
   res.render("buttons");
 });
+
+app.post("/item_names", (req, res) => {
+
+  var todoInput = req.body.text;
+
+  Promise.all([searchAPI.searchMovie(todoInput), searchAPI.searchRestauraunt(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
+     console.log(result);
+    //iterate through result
+    //insert each into database AND THEN OR ALSO
+    //render response to front end after database is finished
+    //
+
+  })
+
+  res.redirect("/");
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
