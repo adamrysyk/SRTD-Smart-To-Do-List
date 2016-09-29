@@ -1,14 +1,10 @@
 "use strict";
 
-require('dotenv').config({path: '../.env'});
+require('dotenv').config( {path: '../.env'});
 var fetch = require("fetch").fetchUrl;
 
-// console.log(process.env.userkey)
-
-
 const restName = process.argv[2]
-
-var options = {
+const options = {
   headers: {
     'user-key': process.env.userkey
   }
@@ -19,9 +15,10 @@ fetch(`https://developers.zomato.com/api/v2.1/search?q=${restName}`, options, fu
   if (err) {
     throw err
   }
-  console.log(JSON.parse(body.toString()).restaurants[0].restaurant);
+  console.log(JSON.parse(body.toString()).restaurants[0]);
 })
 
+// JSON.parse(body.toString()).restaurants[0].restaurant.location.address
 // app.get("/search", (req, res) => {
 
 //   const restName = process.argv[2]
