@@ -10,16 +10,18 @@ var client = amazon.createClient({
   awsSecret: process.env.amazonSECRET,
   awsTag: process.env.amazonTAG
 });
+console.log(process.env.amazonID)
 
 client.itemSearch({
   SearchIndex: "Books",
-  Title: "Pizza Pizza"
+  Title: "harry potter"
 
 }, function(err, results, response) {
   if (err) {
     console.log(err);
   } else {
-    console.log(results[0].ItemAttributes[0]);  // products (Array of Object)
+    console.log('hello')
+    console.log(results);  // products (Array of Object)
     // console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
   }
 });
