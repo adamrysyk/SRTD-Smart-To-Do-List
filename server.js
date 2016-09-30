@@ -53,8 +53,26 @@ app.post("/item_names", (req, res) => {
 
   var todoInput = req.body.text;
 
-  Promise.all([searchAPI.searchMovie(todoInput), searchAPI.searchRestauraunt(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-     console.log(result);
+  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchTVshow(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
+    console.log(result)
+
+    result.forEach(function(searchResult){
+
+      var type = Object.keys(searchResult);
+
+      // console.log(type)
+      // if(type === 'movie'){
+      //   INSERT INTO movies
+      // }
+      // if(type === 'restauraunt'){
+      //   INSERT INTO restauraunt
+      // }
+      // if(type === 'book'){
+      //   INSRT INTO books
+      // }
+
+    })
+
     //iterate through result
     //insert each into database AND THEN OR ALSO
     //render response to front end after database is finished
