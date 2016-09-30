@@ -4,15 +4,15 @@ exports.seed = function(knex, Promise) {
   return knex('items').del()
     .then(function () {
       return Promise.all([
-        knex('items').insert({items_id: 1, list_id: 1, list_kind: 'MOVIES', item_names: 'Mr. Bean'}),
-        knex('items').insert({items_id: 2, list_id: 1, list_kind: 'BOOKS', item_names: 'Harry Potter'}),
-        knex('items').insert({items_id: 3, list_id: 1, list_kind: 'RESTAURANTS', item_names: 'Georges Diner'}),
-        knex('items').insert({items_id: 4, list_id: 2, list_kind: 'MOVIES', item_names: 'Star Wars'}),
-        knex('items').insert({items_id: 5, list_id: 2, list_kind: 'BOOKS', item_names: 'Lord of the Rings'}),
-        knex('items').insert({items_id: 6, list_id: 2, list_kind: 'RESTAURANTS', item_names: 'Subway'}),
-        knex('items').insert({items_id: 7, list_id: 3, list_kind: 'MOVIES', item_names: 'Ironman'}),
-        knex('items').insert({items_id: 8, list_id: 3, list_kind: 'BOOKS', item_names: 'Watchmen'}),
-        knex('items').insert({items_id: 9, list_id: 3, list_kind: 'RESTAURANTS', item_names: 'Black Canary Cafe'})
+        knex('items').insert({id: 1, list_id: 1, name: 'Mr. Bean'}),
+        knex('items').insert({id: 2, list_id: 1, name: 'Harry Potter'}),
+        knex('items').insert({id: 3, list_id: 1, name: 'Georges Diner'}),
+        knex('items').insert({id: 4, list_id: 2, name: 'Star Wars'}),
+        knex('items').insert({id: 5, list_id: 2, name: 'Lord of the Rings'}),
+        knex('items').insert({id: 6, list_id: 2, name: 'Subway'}),
+        knex('items').insert({id: 7, list_id: 3, name: 'Ironman'}),
+        knex('items').insert({id: 8, list_id: 3, name: 'Watchmen'}),
+        knex('items').insert({id: 9, list_id: 3, name: 'Black Canary Cafe'})
       ]);
     });
 };
