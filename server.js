@@ -14,6 +14,8 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const pg = require("pg");
+
 const searchAPI   = require('./routes/searchAPI')
 
 // Seperated Routes for each Resource
@@ -45,31 +47,62 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/lists", (req, res) => {
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/items", (req, res) => {
+  knex.select()
+  .from('items').innerJoin('list', 'lists.id', 'items.list_id')
+  .where('list_kind', 'MOVIES')
+  .then((result) => {
+    res.json(result);
+  })
+});
+
+app.get("/categories", (req, res) => {
   res.render("buttons");
+});
+
+app.get("/categories/books", (req, res) => {
+  res.render("books_list");
+});
+
+app.get("/categories/movies", (req, res) => {
+  res.render("movies_list");
+});
+
+app.get("/categories/tvshows", (req, res) => {
+  res.render("tvshows_list");
+});
+
+app.get("/categories/restaurants", (req, res) => {
+  res.render("restaurants_list");
 });
 
 app.post("/item_names", (req, res) => {
 
   var todoInput = req.body.text;
 
-  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchTVshow(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-    console.log(result)
+  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), /*searchAPI.searchTVshow(todoInput),*/ searchAPI.searchBooks(todoInput)]).then(result => {
 
     result.forEach(function(searchResult){
 
       var type = Object.keys(searchResult);
 
-      // console.log(type)
-      // if(type === 'movie'){
-      //   INSERT INTO movies
+      if(type == 'restauraunt'){
+        console.log(searchResult.restauraunt + " was sorted into restauraunt")
+      }
+
+      if(type == 'movie'){
+        console.log(searchResult.movie + " was sorted into movie");
+      }
+      // if(type === 'tvShow'){
+      //   console.log("sorted into tvShow");
       // }
-      // if(type === 'restauraunt'){
-      //   INSERT INTO restauraunt
-      // }
-      // if(type === 'book'){
-      //   INSRT INTO books
-      // }
+      if(type == 'book'){
+        console.log(searchResult.book + " was sorted into book");
+      }
 
     })
 

@@ -1,4 +1,4 @@
-body {
+  body {
   background-color: #ffffff;
   font-family: verdana;
   justify-content: center;
@@ -9,9 +9,10 @@ body {
   }
 
   #nav-bar {
-    background-color:   #000000;
+    background-color: #000000;
     height: 150px;
     display: flex;
+
     .header {
       margin: 14px 25px;
       font-family: 'Montserrat', sans-serif;
@@ -20,15 +21,18 @@ body {
       flex: 1;
       cursor: pointer;
     }
+
     .header-det {
       display: flex;
       flex-direction: column;
       margin: 15px 25px;
       justify-content: center;
     }
+
     .home-btn {
       flex: 1;
     }
+
     .lists {
       font-family: 'Montserrat', sans-serif;
       font-size: 25px;
@@ -44,6 +48,7 @@ body {
       justify-content: center;
       cursor: pointer;
     }
+
     .login-form {
       display: flex;
       align-items: center;
@@ -94,6 +99,7 @@ body {
           font-family: 'Montserrat', sans-serif;
           font-size: 70px;
         }
+
         #to-do-input {
           margin-top: 10px;
           width: 100%;
@@ -105,8 +111,8 @@ body {
           -webkit-box-shadow: 0 0 0px 1000px white inset;
           font-family: 'Montserrat', sans-serif;
           font-size: 24px;
-
         }
+
         .btn-div {
           display: flex;
           justify-content: flex-end;
@@ -126,43 +132,99 @@ body {
             justify-content: center;
           }
         }
-      }
 
       }
-
     }
+  }
 
-    .buttons-back {
-      background-color: #ffffff;
-      height: 100vh;
+  .buttons-back {
+    background-color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    .buttons-main {
+      background-color: #fafafa;
+      width: 70%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
 
-      .buttons-main {
-        background-color: #fafafa;
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
+      .list-link {
+        margin-top:30px;
+
+        &.last {
+          margin-bottom: 30px;
+        }
 
         .categories {
           background-color: black;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 2px solid #ffffff;
-          height: 150 px;
-          margin-top: 30px;
+          height: 150px;
 
           p {
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             font-size: 70px;
             padding: 20px;
+            margin: 0px;
           }
+        }
       }
     }
+  }
 
+  .list_container-back {
+    background-color: #ffffff;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    .list_container-main {
+      background-color: #fafafa;
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+       .list-header {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 60px;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 150px;
+        color: #ffffff;
+        width: 100%;
+        margin-top: 50px;
+      }
+
+      .movie-item-container {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 40px;
+        margin-top: 40px;
+        background-color: #ffffff;
+        border: 5px solid #000000;
+        height: 100px;
+        color: black;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .type-movie {
+
+        }
+        .movie-title {
+
+        }
+      }
+    }
   }
 
 }
+
+
