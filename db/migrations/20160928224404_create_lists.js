@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('lists', function (table) {
-    table.increments('list_id');
+    table.increments('id');
     table.integer('user_id').unsigned()
     table.string('list_kind')
   });
