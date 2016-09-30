@@ -14,7 +14,6 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-const settings = require("./settings"); // settings.json
 const pg = require("pg");
 
 const searchAPI   = require('./routes/searchAPI')
@@ -54,30 +53,30 @@ app.get("/login", (req, res) => {
 
 app.get("/items", (req, res) => {
   knex.select()
-  .from('items')
-  .where('list_kind', "MOVIES")
+  .from('items').innerJoin('list', 'lists.id', 'items.list_id')
+  .where('list_kind', 'MOVIES')
   .then((result) => {
     res.json(result);
   })
 });
 
-app.get("/lists", (req, res) => {
+app.get("/categories", (req, res) => {
   res.render("buttons");
 });
 
-app.get("/lists/books", (req, res) => {
+app.get("/categories/books", (req, res) => {
   res.render("books_list");
 });
 
-app.get("/lists/movies", (req, res) => {
+app.get("/categories/movies", (req, res) => {
   res.render("movies_list");
 });
 
-app.get("/lists/tvshows", (req, res) => {
+app.get("/categories/tvshows", (req, res) => {
   res.render("tvshows_list");
 });
 
-app.get("/lists/restaurants", (req, res) => {
+app.get("/categories/restaurants", (req, res) => {
   res.render("restaurants_list");
 });
 
