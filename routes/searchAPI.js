@@ -1,8 +1,4 @@
 'use strict';
-
-// require('dotenv').config({path: '../.env'});
-// npm install node-movie --save
-
 const fetch = require("fetch").fetchUrl;
 const movie = require('node-movie');
 var books = require('google-books-search');
@@ -13,7 +9,6 @@ headers: {
   'user-key': process.env.userkey
   }
 }
-
 
 const searchRestauraunt = function(todo) {
   return new Promise((resolve, reject) => {
@@ -77,6 +72,7 @@ module.exports = {
   searchTVshow: searchTVshow,
   searchBooks: searchBooks
 }
+
 
 
 
