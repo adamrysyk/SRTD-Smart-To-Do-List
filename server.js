@@ -64,21 +64,18 @@ app.get("/categories", (req, res) => {
   res.render("buttons");
 });
 
-app.get("/categories/books", (req, res) => {
+app.get("/categories/eat", (req, res) => {
+  res.render("restaurants_list");
+});
+
+app.get("/categories/read", (req, res) => {
   res.render("books_list");
 });
 
-app.get("/categories/movies", (req, res) => {
+app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
-app.get("/categories/tvshows", (req, res) => {
-  res.render("tvshows_list");
-});
-
-app.get("/categories/restaurants", (req, res) => {
-  res.render("restaurants_list");
-});
 
 app.post("/item_names", (req, res) => {
 
