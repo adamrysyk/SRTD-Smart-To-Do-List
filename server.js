@@ -14,7 +14,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-const settings = require("./settings"); // settings.json
+// const settings = require("./settings"); // settings.json
 const pg = require("pg");
 
 const searchAPI   = require('./routes/searchAPI')
@@ -63,17 +63,40 @@ app.post("/item_names", (req, res) => {
       var type = Object.keys(searchResult);
 
       if(type == 'restauraunt'){
-        console.log(searchResult.restauraunt + " was sorted into restauraunt")
+         console.log("sorted into restauraunt");
+
+        knex('items').insert({list_id: 3, name: searchResult.restauraunt})
+        .finally(function() {
+          console.log(searchResult.restauraunt + " was sorted into restauraunts");
+          knex.destroy();
+        });
+
       }
 
+
       if(type == 'movie'){
-        console.log(searchResult.movie + " was sorted into movie");
+         console.log("sorted into movie");
+        knex('items').insert({list_id: 20, name: searchResult.movie})
+        .finally(function() {
+          console.log(searchResult.movie + " was sorted into movies");
+          knex.destroy();
+        });
+
       }
+
       // if(type === 'tvShow'){
       //   console.log("sorted into tvShow");
       // }
+
       if(type == 'book'){
-        console.log(searchResult.book + " was sorted into book");
+         console.log("sorted into book");
+
+        knex('items').insert({list_id: 20, name: searchResult.book}, {})
+        .finally(function() {
+          console.log(searchResult.book + " was sorted into books");
+          knex.destroy();
+        });
+
       }
 
     })
