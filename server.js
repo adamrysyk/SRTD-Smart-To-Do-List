@@ -53,8 +53,8 @@ app.get("/login", (req, res) => {
 
 app.get("/items", (req, res) => {
   knex.select()
-  .from('items').innerJoin('list', 'lists.id', 'items.list_id')
-  .where('list_kind', 'MOVIES')
+  .from('items')
+  .where('type', 'WATCH')
   .then((result) => {
     res.json(result);
   })
