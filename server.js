@@ -51,34 +51,51 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/items", (req, res) => {
+app.get("/items/watch", (req, res) => {
   knex.select()
-  .from('items').innerJoin('list', 'lists.id', 'items.list_id')
-  .where('list_kind', 'MOVIES')
+  .from('items')
+  .where('type', 'WATCH')
   .then((result) => {
     res.json(result);
   })
 });
 
+app.get("/items/read", (req, res) => {
+  knex.select()
+  .from('items')
+  .where('type', 'READ')
+  .then((result) => {
+    res.json(result);
+  })
+});
+
+app.get("/items/eat", (req, res) => {
+  knex.select()
+  .from('items')
+  .where('type', 'EAT')
+  .then((result) => {
+    res.json(result);
+  })
+});
+
+
+
 app.get("/categories", (req, res) => {
   res.render("buttons");
 });
 
-app.get("/categories/books", (req, res) => {
+app.get("/categories/eat", (req, res) => {
+  res.render("restaurants_list");
+});
+
+app.get("/categories/read", (req, res) => {
   res.render("books_list");
 });
 
-app.get("/categories/movies", (req, res) => {
+app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
-app.get("/categories/tvshows", (req, res) => {
-  res.render("tvshows_list");
-});
-
-app.get("/categories/restaurants", (req, res) => {
-  res.render("restaurants_list");
-});
 
 app.post("/item_names", (req, res) => {
 
