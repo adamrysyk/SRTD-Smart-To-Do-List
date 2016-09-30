@@ -14,6 +14,9 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const settings = require("./settings"); // settings.json
+const pg = require("pg");
+
 const searchAPI   = require('./routes/searchAPI')
 
 // Seperated Routes for each Resource
@@ -53,23 +56,25 @@ app.post("/item_names", (req, res) => {
 
   var todoInput = req.body.text;
 
-  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchTVshow(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-    console.log(result)
+  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), /*searchAPI.searchTVshow(todoInput),*/ searchAPI.searchBooks(todoInput)]).then(result => {
 
     result.forEach(function(searchResult){
 
       var type = Object.keys(searchResult);
 
-      // console.log(type)
-      // if(type === 'movie'){
-      //   INSERT INTO movies
+      if(type == 'restauraunt'){
+        console.log(searchResult.restauraunt + " was sorted into restauraunt")
+      }
+
+      if(type == 'movie'){
+        console.log(searchResult.movie + " was sorted into movie");
+      }
+      // if(type === 'tvShow'){
+      //   console.log("sorted into tvShow");
       // }
-      // if(type === 'restauraunt'){
-      //   INSERT INTO restauraunt
-      // }
-      // if(type === 'book'){
-      //   INSRT INTO books
-      // }
+      if(type == 'book'){
+        console.log(searchResult.book + " was sorted into book");
+      }
 
     })
 
