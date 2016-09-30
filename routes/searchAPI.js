@@ -29,11 +29,26 @@ const searchMovie = function(todo) {
   return new Promise((resolve, reject) => {
     movie(todo, (err, data) => {
       if (err) { reject("error")}
-      if (data.Title) {
+      if (data.Type === 'movie') {
         resolve({movie: data.Title});
       } else {
         resolve("not found")
       }
+
+    });
+  });
+}
+
+const searchTVshow = function(todo) {
+  return new Promise((resolve, reject) => {
+    movie(todo, (err, data) => {
+      if (err) { reject("error")}
+      if (data.Type === 'series') {
+        resolve({tvShow: data.Title});
+      } else {
+        resolve("not found")
+      }
+
     });
   });
 }
@@ -54,6 +69,7 @@ const searchBooks = function(todo) {
 module.exports = {
   searchRestauraunt: searchRestauraunt,
   searchMovie: searchMovie,
+  searchTVshow: searchTVshow,
   searchBooks: searchBooks
 }
 
