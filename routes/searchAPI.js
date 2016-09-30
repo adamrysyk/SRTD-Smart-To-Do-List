@@ -13,7 +13,7 @@ headers: {
 const searchRestauraunt = function(todo) {
   return new Promise((resolve, reject) => {
     fetch(`https://developers.zomato.com/api/v2.1/search?q=${todo}`, options, function(err, response, body) {
-      if(err) { reject("error")}
+      if (err) { reject("error")}
       if (!JSON.parse(body.toString()).restaurants[0]){
         resolve("not found")
       } else if (JSON.parse(body.toString()).restaurants[0].restaurant.name) {
