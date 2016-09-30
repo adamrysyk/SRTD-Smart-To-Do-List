@@ -13,7 +13,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-
+const cookieParser = require('cookie-parser');
 
 const pg = require("pg");
 
@@ -30,6 +30,8 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+app.use(cookieParser());
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
@@ -42,6 +44,7 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
+
 
 // Home page
 app.get("/", (req, res) => {
@@ -81,7 +84,13 @@ app.get("/categories/restaurants", (req, res) => {
   res.render("restaurants_list");
 });
 
+
+app.use('/login', usersRoutes(knex));
+
+
 app.post("/item_names", (req, res) => {
+
+  console.log(req.cookies.username);
 
   var todoInput = req.body.text;
 
@@ -89,12 +98,11 @@ app.post("/item_names", (req, res) => {
 
     result.forEach(function(searchResult){
 
-      var type = Object.keys(searchResult);
+      var category = Object.keys(searchResult);
 
-      if(type == 'restauraunt'){
-         console.log("sorted into restauraunt");
+      if(category == 'restauraunt'){
 
-        knex('items').insert({list_id: 3, name: searchResult.restauraunt})
+        knex('items').insert({user_id: req.cookies.username, name: searchResult.restauraunt, type: 'EAT'})
         .finally(function() {
           console.log(searchResult.restauraunt + " was sorted into restauraunts");
           knex.destroy();
@@ -102,30 +110,23 @@ app.post("/item_names", (req, res) => {
 
       }
 
+      if(category == 'movie'){
 
-      if(type == 'movie'){
-         console.log("sorted into movie");
-        knex('items').insert({list_id: 20, name: searchResult.movie})
+        knex('items').insert({user_id: req.cookies.username, name: searchResult.movie, type: 'WATCH'})
         .finally(function() {
-          console.log(searchResult.movie + " was sorted into movies");
+          console.log(searchResult.restauraunt + " was sorted into movies");
           knex.destroy();
         });
 
       }
 
-      // if(type === 'tvShow'){
-      //   console.log("sorted into tvShow");
-      // }
+      if(category == 'book'){
 
-      if(type == 'book'){
-         console.log("sorted into book");
-
-        knex('items').insert({list_id: 20, name: searchResult.book}, {})
+        knex('items').insert({user_id: req.cookies.username, name: searchResult.book, type: 'READ'})
         .finally(function() {
-          console.log(searchResult.book + " was sorted into books");
+          console.log(searchResult.restauraunt + " was sorted into books");
           knex.destroy();
         });
-
       }
 
     })
