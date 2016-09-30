@@ -51,7 +51,7 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/items", (req, res) => {
+app.get("/items/watch", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'WATCH')
@@ -59,6 +59,26 @@ app.get("/items", (req, res) => {
     res.json(result);
   })
 });
+
+app.get("/items/read", (req, res) => {
+  knex.select()
+  .from('items')
+  .where('type', 'READ')
+  .then((result) => {
+    res.json(result);
+  })
+});
+
+app.get("/items/eat", (req, res) => {
+  knex.select()
+  .from('items')
+  .where('type', 'EAT')
+  .then((result) => {
+    res.json(result);
+  })
+});
+
+
 
 app.get("/categories", (req, res) => {
   res.render("buttons");
