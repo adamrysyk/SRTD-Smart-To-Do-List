@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments('items_id');
     table.integer('list_id').unsigned()
     table.string('list_kind')
-    table.string('items')
+    table.string('item_names')
   });
 };
 

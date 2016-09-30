@@ -1,3 +1,15 @@
+createListElement = (item) => {
+  let $listItem = $("<div>").addClass("movie-item-container")
+  .append($("<p>").addClass("movie-title").text(item.item_names))
+  return $listItem
+}
+
+
+
+
+
+
+
 $(() => {
   $.ajax({
     method: "GET",
@@ -13,10 +25,10 @@ $(() => {
     method: "GET",
     url: "/items"
   }).done((items) => {
-    // for (item of items)
-    //   $("<div>").text(item.items)
-    // }
-    $("<div>").text(items[0].list_kind).appendTo($(".movie-item-container"))
-    $("<div>").text(items[0].items).appendTo($(".movie-item-container"))
+
+    for (item of items) {
+      let $listItem = createListElement(item)
+      $('.list_container-main').append($listItem[0])
+    }
   })
 });
