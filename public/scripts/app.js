@@ -29,7 +29,7 @@ $(() => {
 
     for (item of items) {
       let $listItem = createListElement(item)
-      $('.list_container-main').append($listItem[0])
+      $('.list_container-main movies').append($listItem[0])
     }
   })
 });
