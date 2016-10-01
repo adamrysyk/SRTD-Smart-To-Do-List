@@ -24,9 +24,10 @@ module.exports = (knex) => {
       .then((results) => {
 
         if(results[0]){
-          res.cookie("username", results[0].id);
-          res.redirect("/");
 
+          res.cookie("userID", results[0].id);
+          res.cookie("username", username)
+          res.redirect("/");
         }else{
           res.redirect("/login")
         }
@@ -36,10 +37,3 @@ module.exports = (knex) => {
   return router;
 }
 
-
-
-//write function that takes username & password and returns data or error
-
-//select user from database with matching username and has matching pswd (knex)
-
-//if returns data => write cookie and take data from database
