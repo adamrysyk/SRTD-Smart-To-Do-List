@@ -1,20 +1,11 @@
 createListElement = (item) => {
   let $listItem = $("<div>").addClass("movie-item-container")
-  .append($("<p>").addClass("movie-title").text(item.name)).append($("<button>").text("Delete"));
+  .append($("<p>").addClass("movie-title").text(item.name));
   return $listItem
 }
 
 
 $(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });;
-
 
   $.ajax({
     method: "GET",
@@ -52,4 +43,11 @@ $(() => {
     }
   })
 
+  $.ajax({
+    method: "POST",
+    url: "/login"
+  })
+
+
 });
+

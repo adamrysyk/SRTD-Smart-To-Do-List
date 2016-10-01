@@ -22,6 +22,7 @@ const searchAPI   = require('./routes/searchAPI')
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const registerRoutes = require("./routes/register");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -114,6 +115,8 @@ app.get("/categories/watch", (req, res) => {
 
 
 app.use('/login', usersRoutes(knex));
+
+app.use('/register', registerRoutes(knex));
 
 app.post('/logout', (req, res) => {
   res.clearCookie("username");
