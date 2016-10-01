@@ -7,9 +7,6 @@ createListElement = (item) => {
 
 
 
-
-
-
 $(() => {
   $.ajax({
     method: "GET",

@@ -20,9 +20,8 @@ module.exports = (knex) => {
       .select("*")
       .from("users")
       .where("username", username)
+      .andWhere("password", password)
       .then((results) => {
-        // res.json(results);
-        // console.log(results);
 
         if(results[0]){
           res.cookie("username", results[0].id);
@@ -33,10 +32,6 @@ module.exports = (knex) => {
         }
     });
   });
-
-
-
-
 
   return router;
 }

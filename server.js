@@ -59,6 +59,7 @@ app.get("/items/watch", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'WATCH')
+  .andWhere('user_id', req.cookies.username)
   .then((result) => {
     res.json(result);
   })
@@ -68,6 +69,7 @@ app.get("/items/read", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'READ')
+  .andWhere('user_id', req.cookies.username)
   .then((result) => {
     res.json(result);
   })
@@ -77,12 +79,11 @@ app.get("/items/eat", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'EAT')
+  .andWhere('user_id', req.cookies.username)
   .then((result) => {
     res.json(result);
   })
 });
-
-
 
 app.get("/categories", (req, res) => {
   res.render("buttons");
@@ -101,8 +102,13 @@ app.get("/categories/watch", (req, res) => {
 });
 
 
-
 app.use('/login', usersRoutes(knex));
+
+app.post('/logout', (req, res) => {
+  res.clearCookie("username");
+  res.redirect("/login");
+
+});
 
 
 app.post("/item_names", (req, res) => {
@@ -122,7 +128,6 @@ app.post("/item_names", (req, res) => {
         knex('items').insert({user_id: req.cookies.username, name: searchResult.restauraunt, type: 'EAT'})
         .finally(function() {
           console.log(searchResult.restauraunt + " was sorted into restauraunts");
-          knex.destroy();
         });
 
       }
@@ -131,8 +136,7 @@ app.post("/item_names", (req, res) => {
 
         knex('items').insert({user_id: req.cookies.username, name: searchResult.movie, type: 'WATCH'})
         .finally(function() {
-          console.log(searchResult.restauraunt + " was sorted into movies");
-          knex.destroy();
+          console.log(searchResult.movie + " was sorted into movies");
         });
 
       }
@@ -141,17 +145,11 @@ app.post("/item_names", (req, res) => {
 
         knex('items').insert({user_id: req.cookies.username, name: searchResult.book, type: 'READ'})
         .finally(function() {
-          console.log(searchResult.restauraunt + " was sorted into books");
-          knex.destroy();
+          console.log(searchResult.book + " was sorted into books");
         });
       }
 
     })
-
-    //iterate through result
-    //insert each into database AND THEN OR ALSO
-    //render response to front end after database is finished
-    //
 
   })
 
