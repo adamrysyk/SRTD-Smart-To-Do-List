@@ -7,6 +7,17 @@ createListElement = (item) => {
 
 $(() => {
 
+  $('.manual').submit(function(event) {
+    $.ajax({
+      method: "POST",
+      url: "/items/watch"
+    }).done((items) => {
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+    }
+  })
+
   $.ajax({
     method: "GET",
     url: "/items/watch"
@@ -43,11 +54,34 @@ $(() => {
     }
   })
 
-  $.ajax({
-    method: "POST",
-    url: "/login"
-  })
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

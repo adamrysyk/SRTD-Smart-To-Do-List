@@ -97,6 +97,33 @@ app.get("/items/eat", (req, res) => {
   })
 });
 
+app.post("/items/watch", (req, res) => {
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
+  .then((results)=> {
+    console.log('movie inserted');
+    res.redirect("/categories/watch")
+  });
+});
+
+app.post("/items/read", (req, res) => {
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'READ'})
+  .then((results)=> {
+   console.log('book inserted');
+  res.redirect("/categories/read")
+  });
+});
+
+app.post("/items/eat", (req, res) => {
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'EAT'})
+  .then((results)=> {
+     console.log('restaurant inserted');
+    res.render("/categories/eat")
+  });
+});
+
 app.get("/categories", (req, res) => {
   res.render("buttons");
 });
