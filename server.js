@@ -112,6 +112,11 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
+// app.delete("/items/movies", (req, res) => {
+//    collection.deleteOne( {shortURL: req.params.id } );
+//   res.redirect("/urls");
+// });
+
 
 app.use('/login', usersRoutes(knex));
 
