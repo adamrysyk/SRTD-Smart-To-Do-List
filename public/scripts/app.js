@@ -1,10 +1,8 @@
 createListElement = (item) => {
   let $listItem = $("<div>").addClass("movie-item-container")
-  .append($("<p>").addClass("movie-title").text(item.name))
+  .append($("<p>").addClass("movie-title").text(item.name)).append($("<button>").text("Delete"));
   return $listItem
 }
-
-
 
 
 $(() => {
