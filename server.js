@@ -68,6 +68,7 @@ app.get("/items/watch", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'WATCH')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
@@ -79,6 +80,7 @@ app.get("/items/read", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'READ')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
@@ -90,6 +92,7 @@ app.get("/items/eat", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'EAT')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
@@ -112,14 +115,13 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
-app.post("/del/items/watch", (req, res) => {
-  debugger;
-   knex('items')
+app.delete("/del/items/:cat/:id", (req, res) => {
+  knex('items')
   .where('id', req.params.id)
-  .del()
-  res.redirect("/categories/watch");
+  .del().then(function () {
+    res.redirect(`/categories/${req.params.cat}`);
+  })
 });
-
 
 app.use('/login', usersRoutes(knex));
 
