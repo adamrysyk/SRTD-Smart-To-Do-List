@@ -1,6 +1,6 @@
 createListElement = (item) => {
-  let $listItem = $("<div>").addClass("movie-item-container")
-  .append($("<p>").addClass("movie-title").text(item.name));
+  let $listItem = $("<div>").addClass("item-container")
+  .append($("<p>").addClass("item-entry").text(item.name));
   return $listItem
 }
 
@@ -16,7 +16,7 @@ $(() => {
 
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
+      $('.watch').append($listItem[0])
     }
   })
 
@@ -25,10 +25,9 @@ $(() => {
     url: "/items/read"
   }).done((items) => {
     console.log(items)
-
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.read').append($listItem[0])
+      $('.read').append($listItem[0])
     }
   })
 
@@ -40,48 +39,44 @@ $(() => {
 
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.eat').append($listItem[0])
+      $('.eat').append($listItem[0])
     }
   })
 
-  $('.manual').submit(function(event) {
-    // event.preventDefault();
+  $('#manual-watch').submit(function(event) {
+    event.preventDefault();
     $.ajax({
       method: "POST",
-      url: "/items/watch"
-    }).done((items) => {
-      for (item of items) {
-        let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
+      url: "/items/watch",
+      success: function () {
+        $('.edithere').val('');
       }
     })
   })
 
-  $('.manual').submit(function(event) {
-    // event.preventDefault();
+  $('#manual-read').submit(function(event) {
+    event.preventDefault();
     $.ajax({
       method: "POST",
-      url: "/items/read"
-    }).done((items) => {
-      for (item of items) {
-        let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
+      url: "/items/read",
+      success: function () {
+        $('.edithere').val('');
       }
     })
   })
 
-  $('.manual').submit(function(event) {
-    // event.preventDefault();
+  $('#manual-eat').submit(function(event) {
+    event.preventDefault();
     $.ajax({
       method: "POST",
-      url: "/items/eat"
-    }).done((items) => {
-      for (item of items) {
-        let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
+      url: "/items/eat",
+      success: function () {
+        $('.edithere').val('');
       }
     })
   })
+
+
 });
 
 

@@ -85,10 +85,10 @@ app.get("/items/eat", (req, res) => {
 });
 
 app.post("/items/watch", (req, res) => {
+  console.log(req.body, 'req body')
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
   .then((results)=> {
-    console.log(results);
     res.redirect("/categories/watch")
   });
 });
@@ -97,7 +97,6 @@ app.post("/items/read", (req, res) => {
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'READ'})
   .then((results)=> {
-   console.log('book inserted');
   res.redirect("/categories/read")
   });
 });
@@ -106,7 +105,6 @@ app.post("/items/eat", (req, res) => {
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'EAT'})
   .then((results)=> {
-     console.log('restaurant inserted');
     res.redirect("/categories/eat")
   });
 });
@@ -126,8 +124,6 @@ app.get("/categories/read", (req, res) => {
 app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
-
-
 
 app.post('/logout', (req, res) => {
   res.clearCookie("username");
