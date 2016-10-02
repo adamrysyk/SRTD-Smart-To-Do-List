@@ -44,7 +44,7 @@ $(() => {
   })
 
   $('#manual-watch').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     $.ajax({
       method: "POST",
       url: "/items/watch",
@@ -55,7 +55,7 @@ $(() => {
   })
 
   $('#manual-read').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     $.ajax({
       method: "POST",
       url: "/items/read",
@@ -66,7 +66,7 @@ $(() => {
   })
 
   $('#manual-eat').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     $.ajax({
       method: "POST",
       url: "/items/eat",
