@@ -119,6 +119,13 @@ app.delete("/del/items/:cat/:id", (req, res) => {
   knex('items')
   .where('id', req.params.id)
   .del().then(function () {
+    // Promise.all()
+    // .then(function () {
+    //     return knex.destroy();
+    // })
+    // .then(function () {
+    //     console.log('all done');
+    // });
     res.redirect(`/categories/${req.params.cat}`);
   })
 });
