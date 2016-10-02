@@ -38,6 +38,7 @@
       font-size: 25px;
       color: white;
       text-align: center;
+      padding: 5px 10px;
       margin: 0px 0px 10px 0px;
       height: 50%;
       width: 100%;
@@ -53,16 +54,11 @@
       display: flex;
       align-items: center;
 
-      input[type=text] {
-        padding: 5px;
-        border: 2px solid #ffffff;
-        margin-right: 5px;
-        outline: none;
-        -webkit-box-shadow: 0 0 0px 1000px white inset;
-      }
-
-      input[type=text]:focus {
-        border-color:#333;
+      #username {
+        font-family: 'Montserrat', sans-serif;
+        color: #ffffff;
+        font-size: 18px;
+        margin-right: 10px;
       }
 
       input[type=submit] {
@@ -233,19 +229,20 @@
             text-align: center;
             padding: 0px 40px;
             flex: 2;
+            margin-left: 55px;
+            word-break: break-all;
 
 
           }
 
           .delete-title {
-              margin: 0px 20px;
+              margin-right: 20px;
+              width: 35px;
+              height: 35px;
               font-size: 18px;
-              width: 100px;
-              height: 40px;
               cursor: pointer;
               font-family: 'Montserrat', sans-serif;
               color: #000000;
-              padding: 5px 15px;
               background: #ffffff;
               border-width: 3px;
               border-style: solid;

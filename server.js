@@ -22,7 +22,6 @@ const searchAPI   = require('./routes/searchAPI')
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
-const registerRoutes = require("./routes/register");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -48,7 +47,7 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+app.use("/api/users", usersRoutes(knex));
 
 
 // Home page
@@ -113,15 +112,16 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
-// app.delete("/items/movies", (req, res) => {
-//    collection.deleteOne( {shortURL: req.params.id } );
-//   res.redirect("/urls");
-// });
+app.post("/del/items/:id", (req, res) => {
+  debugger;
+   knex('items')
+  .where('id', req.params.id)
+  .del()
+  res.redirect("/categories/watch");
+});
 
 
 app.use('/login', usersRoutes(knex));
-
-app.use('/register', registerRoutes(knex));
 
 app.post('/logout', (req, res) => {
   res.clearCookie("username");
