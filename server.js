@@ -53,7 +53,7 @@ app.use("/api/users", usersRoutes(knex));
 // Home page
 app.get("/", (req, res) => {
   if(req.cookies.userID){
-    res.render("index");
+    res.render("index", { user: req.cookies.username } );
   }else{
     res.redirect("login")
   }
@@ -100,19 +100,19 @@ app.get("/items/eat", (req, res) => {
 });
 
 app.get("/categories", (req, res) => {
-  res.render("buttons");
+  res.render("buttons", { user: req.cookies.username } );
 });
 
 app.get("/categories/eat", (req, res) => {
-  res.render("restaurants_list");
+  res.render("restaurants_list", { user: req.cookies.username } );
 });
 
 app.get("/categories/read", (req, res) => {
-  res.render("books_list");
+  res.render("books_list", { user: req.cookies.username } );
 });
 
 app.get("/categories/watch", (req, res) => {
-  res.render("movies_list");
+  res.render("movies_list", { user: req.cookies.username } );
 });
 
 app.delete("/del/items/:cat/:id", (req, res) => {
