@@ -85,7 +85,6 @@ app.get("/items/eat", (req, res) => {
 });
 
 app.post("/items/watch", (req, res) => {
-  console.log(req.body, 'req body')
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
   .then((results)=> {
