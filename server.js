@@ -8,36 +8,24 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
-
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
-
 const pg = require("pg");
-
 const searchAPI   = require('./routes/searchAPI')
 
-// Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const registerRoutes = require("./routes/register");
 
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
-
-// Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
-
-app.use(cookieParser());
-
-//overrride with POST having ?_method=DELETE
-app.use(methodOverride('_method'));
-
 app.set("view engine", "ejs");
+
+app.use(morgan('dev'));
+app.use(knexLogger(knex));
+app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -47,8 +35,10 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+
+// login and register user
+app.use('/login', usersRoutes(knex));
+app.use('/register', registerRoutes(knex));
 
 
 // Home page
@@ -65,7 +55,6 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/items/watch", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'WATCH')
@@ -76,7 +65,6 @@ app.get("/items/watch", (req, res) => {
 });
 
 app.get("/items/read", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'READ')
@@ -87,7 +75,6 @@ app.get("/items/read", (req, res) => {
 });
 
 app.get("/items/eat", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'EAT')
@@ -101,7 +88,7 @@ app.post("/items/watch", (req, res) => {
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
   .then((results)=> {
-    console.log('movie inserted');
+    console.log(results);
     res.redirect("/categories/watch")
   });
 });
@@ -141,9 +128,6 @@ app.get("/categories/watch", (req, res) => {
 });
 
 
-app.use('/login', usersRoutes(knex));
-
-app.use('/register', registerRoutes(knex));
 
 app.post('/logout', (req, res) => {
   res.clearCookie("username");
