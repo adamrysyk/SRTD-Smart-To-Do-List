@@ -32,7 +32,7 @@ $(() => {
     }
   })
 
-    $.ajax({
+  $.ajax({
     method: "GET",
     url: "/items/eat"
   }).done((items) => {
@@ -45,6 +45,7 @@ $(() => {
   })
 
   $('.manual').submit(function(event) {
+    // event.preventDefault();
     $.ajax({
       method: "POST",
       url: "/items/watch"
@@ -56,7 +57,31 @@ $(() => {
     })
   })
 
+  $('.manual').submit(function(event) {
+    // event.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: "/items/read"
+    }).done((items) => {
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+      }
+    })
+  })
 
+  $('.manual').submit(function(event) {
+    // event.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: "/items/eat"
+    }).done((items) => {
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+      }
+    })
+  })
 });
 
 

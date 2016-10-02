@@ -107,7 +107,7 @@ app.post("/items/eat", (req, res) => {
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'EAT'})
   .then((results)=> {
      console.log('restaurant inserted');
-    res.render("/categories/eat")
+    res.redirect("/categories/eat")
   });
 });
 
