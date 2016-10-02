@@ -4,7 +4,7 @@ createListElement = (item) => {
   .append($("<p>").addClass("movie-title").text(item.name))
   .append($("<form>").addClass("delete-form")
   .attr( "method", "POST" )
-  .attr( "action", `/del/items/${item.id}` )
+  .attr( "action", `/del/items/${item.id}?_method=DELETE` )
   .append($("<button>").addClass("delete-title").text("X")))
   return $listItem
 }

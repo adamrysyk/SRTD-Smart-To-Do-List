@@ -112,7 +112,7 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
 });
 
-app.post("/del/items/:id", (req, res) => {
+app.post("/del/items/watch", (req, res) => {
   debugger;
    knex('items')
   .where('id', req.params.id)
