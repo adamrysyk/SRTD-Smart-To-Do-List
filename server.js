@@ -34,11 +34,10 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-
-
 // login and register user
 app.use('/login', usersRoutes(knex));
 app.use('/register', registerRoutes(knex));
+
 
 
 // Home page
@@ -58,6 +57,7 @@ app.get("/items/watch", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'WATCH')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
@@ -68,6 +68,7 @@ app.get("/items/read", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'READ')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
@@ -78,33 +79,35 @@ app.get("/items/eat", (req, res) => {
   knex.select()
   .from('items')
   .where('type', 'EAT')
+  .orderBy('id', 'desc')
   .andWhere('user_id', req.cookies.userID)
   .then((result) => {
     res.json(result);
   })
 });
 
-app.post("/items/watch", (req, res) => {
+app.post("/categories/watch", (req, res) => {
+  console.log(req.body.manual)
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
-  .then((results)=> {
-    res.redirect("/categories/watch")
-  });
+  .then((result) => {
+    res.redirect('watch')
+  })
 });
 
-app.post("/items/read", (req, res) => {
+app.post("/categories/read", (req, res) => {
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'READ'})
   .then((results)=> {
-  res.redirect("/categories/read")
+  res.redirect("read")
   });
 });
 
-app.post("/items/eat", (req, res) => {
+app.post("/categories/eat", (req, res) => {
   knex('items')
   .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'EAT'})
   .then((results)=> {
-    res.redirect("/categories/eat")
+    res.redirect("eat")
   });
 });
 
@@ -122,6 +125,15 @@ app.get("/categories/read", (req, res) => {
 
 app.get("/categories/watch", (req, res) => {
   res.render("movies_list");
+});
+
+
+app.delete("/del/items/:cat/:id", (req, res) => {
+  knex('items')
+  .where('id', req.params.id)
+  .del().then(function () {
+    res.redirect(`/categories/${req.params.cat}`);
+  })
 });
 
 app.post('/logout', (req, res) => {

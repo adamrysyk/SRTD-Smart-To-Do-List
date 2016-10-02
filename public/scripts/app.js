@@ -1,9 +1,13 @@
+
 createListElement = (item) => {
-  let $listItem = $("<div>").addClass("item-container")
-  .append($("<p>").addClass("item-entry").text(item.name));
+  let $listItem = $("<div>").addClass("movie-item-container")
+  .append($("<p>").addClass("movie-title").text(item.name))
+  .append($("<form>").addClass("delete-form")
+  .attr( "method", "POST" )
+  .attr( "action", `/del/items/${item.type.toLowerCase()}/${item.id}?_method=DELETE` )
+  .append($("<button>").addClass("delete-title").attr("type", "submit").text("X")))
   return $listItem
 }
-
 
 $(() => {
 
@@ -12,8 +16,6 @@ $(() => {
     method: "GET",
     url: "/items/watch"
   }).done((items) => {
-    console.log(items)
-
     for (item of items) {
       let $listItem = createListElement(item)
       $('.watch').append($listItem[0])
@@ -24,7 +26,6 @@ $(() => {
     method: "GET",
     url: "/items/read"
   }).done((items) => {
-    console.log(items)
     for (item of items) {
       let $listItem = createListElement(item)
       $('.read').append($listItem[0])
@@ -35,8 +36,6 @@ $(() => {
     method: "GET",
     url: "/items/eat"
   }).done((items) => {
-    console.log(items)
-
     for (item of items) {
       let $listItem = createListElement(item)
       $('.eat').append($listItem[0])
@@ -46,10 +45,13 @@ $(() => {
   $('#manual-watch').submit(function(event) {
     // event.preventDefault();
     $.ajax({
-      method: "POST",
-      url: "/items/watch",
-      success: function () {
-        $('.edithere').val('');
+      method: "GET",
+      url: "/items/watch"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
       }
     })
   })
@@ -57,10 +59,13 @@ $(() => {
   $('#manual-read').submit(function(event) {
     // event.preventDefault();
     $.ajax({
-      method: "POST",
-      url: "/items/read",
-      success: function () {
-        $('.edithere').val('');
+      method: "GET",
+      url: "/items/read"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
       }
     })
   })
@@ -68,10 +73,13 @@ $(() => {
   $('#manual-eat').submit(function(event) {
     // event.preventDefault();
     $.ajax({
-      method: "POST",
-      url: "/items/eat",
-      success: function () {
-        $('.edithere').val('');
+      method: "GET",
+      url: "/items/eat"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
       }
     })
   })
