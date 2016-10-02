@@ -8,35 +8,24 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
-
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
-
 const pg = require("pg");
-
 const searchAPI   = require('./routes/searchAPI')
 
-// Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
-
-// Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
-
-app.use(cookieParser());
-
-//overrride with POST having ?_method=DELETE
-app.use(methodOverride('_method'));
+const registerRoutes = require("./routes/register");
 
 app.set("view engine", "ejs");
+
+app.use(morgan('dev'));
+app.use(knexLogger(knex));
+app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -45,9 +34,10 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+// login and register user
+app.use('/login', usersRoutes(knex));
+app.use('/register', registerRoutes(knex));
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
 
 
 // Home page
@@ -64,7 +54,6 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/items/watch", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'WATCH')
@@ -76,7 +65,6 @@ app.get("/items/watch", (req, res) => {
 });
 
 app.get("/items/read", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'READ')
@@ -88,7 +76,6 @@ app.get("/items/read", (req, res) => {
 });
 
 app.get("/items/eat", (req, res) => {
-
   knex.select()
   .from('items')
   .where('type', 'EAT')
@@ -97,6 +84,31 @@ app.get("/items/eat", (req, res) => {
   .then((result) => {
     res.json(result);
   })
+});
+
+app.post("/categories/watch", (req, res) => {
+  console.log(req.body.manual)
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'WATCH'})
+  .then((result) => {
+    res.redirect('watch')
+  })
+});
+
+app.post("/categories/read", (req, res) => {
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'READ'})
+  .then((results)=> {
+  res.redirect("read")
+  });
+});
+
+app.post("/categories/eat", (req, res) => {
+  knex('items')
+  .insert({user_id:req.cookies.userID, name: req.body.manual, type: 'EAT'})
+  .then((results)=> {
+    res.redirect("eat")
+  });
 });
 
 app.get("/categories", (req, res) => {
@@ -115,6 +127,7 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list", { user: req.cookies.username } );
 });
 
+
 app.delete("/del/items/:cat/:id", (req, res) => {
   knex('items')
   .where('id', req.params.id)
@@ -122,8 +135,6 @@ app.delete("/del/items/:cat/:id", (req, res) => {
     res.redirect(`/categories/${req.params.cat}`);
   })
 });
-
-app.use('/login', usersRoutes(knex));
 
 app.post('/logout', (req, res) => {
   res.clearCookie("username");

@@ -11,13 +11,14 @@ createListElement = (item) => {
 
 $(() => {
 
+
   $.ajax({
     method: "GET",
     url: "/items/watch"
   }).done((items) => {
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
+      $('.watch').append($listItem[0])
     }
   })
 
@@ -27,25 +28,89 @@ $(() => {
   }).done((items) => {
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.read').append($listItem[0])
+      $('.read').append($listItem[0])
     }
   })
 
-    $.ajax({
+  $.ajax({
     method: "GET",
     url: "/items/eat"
   }).done((items) => {
     for (item of items) {
       let $listItem = createListElement(item)
-        $('.eat').append($listItem[0])
+      $('.eat').append($listItem[0])
     }
   })
 
-  $.ajax({
-    method: "POST",
-    url: "/login"
+  $('#manual-watch').submit(function(event) {
+    // event.preventDefault();
+    $.ajax({
+      method: "GET",
+      url: "/items/watch"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+      }
+    })
+  })
+
+  $('#manual-read').submit(function(event) {
+    // event.preventDefault();
+    $.ajax({
+      method: "GET",
+      url: "/items/read"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+      }
+    })
+  })
+
+  $('#manual-eat').submit(function(event) {
+    // event.preventDefault();
+    $.ajax({
+      method: "GET",
+      url: "/items/eat"
+    }).done((items) => {
+      $('.edithere').val('');
+      for (item of items) {
+        let $listItem = createListElement(item)
+        $('.watch').append($listItem[0])
+      }
+    })
   })
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
