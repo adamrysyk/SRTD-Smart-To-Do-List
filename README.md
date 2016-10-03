@@ -6,13 +6,13 @@
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information
 
-DB_HOST=" YOUR POSTGRES HOST "
-DB_USER=" YOUR POSTGRES USER "
-DB_PASS=" YOUR POSTGRES PASSWORD"
-DB_NAME=" YOUR DATABASE NAME "
-DB_SSL=true
-DB_PORT= YOUR PORT
-userkey=" YOUR ZOMATO API KEY "
+* DB_HOST=" YOUR POSTGRES HOST "
+* DB_USER=" YOUR POSTGRES USER "
+* DB_PASS=" YOUR POSTGRES PASSWORD"
+* DB_NAME=" YOUR DATABASE NAME "
+* DB_SSL=true
+* DB_PORT= YOUR PORT
+* userkey=" YOUR ZOMATO API KEY "
 
 
 3. Install dependencies: `npm install`
