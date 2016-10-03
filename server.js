@@ -150,7 +150,7 @@ app.post("/item_names", (req, res) => {
 
 
   var todoInput = req.body.text;
-  console.log('todoInput: ', todoInput)
+
   if (todoInput !== "") {
 
     Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
@@ -158,8 +158,6 @@ app.post("/item_names", (req, res) => {
       result.forEach(function(searchResult) {
 
         var category = Object.keys(searchResult);
-        console.log(searchResult);
-        console.log('category', category)
 
         if (category == 'restauraunt' && searchResult.restauraunt !== null){
           knex('items').insert({user_id: req.cookies.userID, name: searchResult.restauraunt, type: 'EAT'})

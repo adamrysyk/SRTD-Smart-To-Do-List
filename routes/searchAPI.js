@@ -20,8 +20,6 @@ const searchRestauraunt = function(todo) {
         JSON.parse(body.toString()).restaurants[0].restaurant.name
         && todo.toLowerCase() === JSON.parse(body.toString()).restaurants[0].restaurant.name.toLowerCase()) {
         resolve({restauraunt: JSON.parse(body.toString()).restaurants[0].restaurant.name});
-      } else {
-        resolve("not found")
       }
     });
   });
