@@ -16,7 +16,7 @@ const searchRestauraunt = function(todo) {
       if (err) { reject("error")}
       if (!JSON.parse(body.toString()).restaurants[0]){
         resolve("not found")
-      } else if (JSON.parse(body.toString()).restaurants[0].restaurant.name) {
+      } else if (todo === JSON.parse(body.toString()).restaurants[0].restaurant.name) {
         resolve({restauraunt: JSON.parse(body.toString()).restaurants[0].restaurant.name});
       } else {
         resolve("not found")
@@ -29,7 +29,7 @@ const searchMovie = function(todo) {
   return new Promise((resolve, reject) => {
     movie(todo, (err, data) => {
       if (err) { reject("error")}
-      if (data.Type === 'movie') {
+      if (data.Title === todo) {
         resolve({movie: data.Title});
       } else {
         resolve("not found")
@@ -43,7 +43,7 @@ const searchBooks = function(todo) {
   return new Promise((resolve, reject) => {
     books.search(todo, (err, results) => {
       if (err) { reject("error")}
-      if (results[0].title) {
+      if (todo === results[0].title) {
         resolve({book: results[0].title})
       } else {
         resolve({book: null})
