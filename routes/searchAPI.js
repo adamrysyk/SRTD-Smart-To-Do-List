@@ -48,7 +48,7 @@ const searchBooks = function(todo) {
       if (results[0].title && todo.toLowerCase() === results[0].title.toLowerCase()) {
         resolve({book: results[0].title})
       } else {
-        resolve({book: null})
+        resolve("not found")
       }
     });
   });
