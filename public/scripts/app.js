@@ -43,17 +43,20 @@ $(() => {
   })
 
   $('#manual-watch').submit(function(event) {
-    // event.preventDefault();
-    $.ajax({
-      method: "GET",
-      url: "/items/watch"
-    }).done((items) => {
-      $('.edithere').val('');
-      for (item of items) {
-        let $listItem = createListElement(item)
-        $('.watch').append($listItem[0])
-      }
-    })
+    let serArr = $('#manual-watch').serializeArray();
+    console.log(serArr)
+    event.preventDefault();
+    // $.ajax({
+    //   method: "POST",
+    //   url: "/items/watch"
+    //   data:
+    // }).done((items) => {
+    //   $('.edithere').val('');
+    //   for (item of items) {
+    //     let $listItem = createListElement(item)
+    //     $('.watch').append($listItem[0])
+    //   }
+    // })
   })
 
   $('#manual-read').submit(function(event) {
