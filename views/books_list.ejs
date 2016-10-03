@@ -7,10 +7,12 @@
 
   <div class="list_container-back">
     <div class="list_container-main read">
-      <form id="manual-read" METHOD=POST action="/categories/read" >
-        <textarea class="editHere" name="manual" placeholder="add things"></textarea>
-        <input class="submitItem" type="submit" value="add">
-      </form>
+      <div class="manual-input">
+        <form id="manual-read" METHOD=POST action="/categories/read" >
+          <textarea class="editHere" name="manual" placeholder="New book"></textarea>
+          <input class="submitItem" type="submit" value="add">
+        </form>
+      </div>
       <div class="list-header">
         <p>-BOOKS TO READ-</p>
       </div>
