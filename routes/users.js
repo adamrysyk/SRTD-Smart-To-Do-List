@@ -6,8 +6,8 @@ const fetch = require("fetch").fetchUrl;
 const request = require('request');
 const amazon = require('amazon-product-api');
 const express = require('express');
-const router  = express.Router();
 const movie = require('node-movie');
+const router  = express.Router();
 
 module.exports = (knex) => {
 

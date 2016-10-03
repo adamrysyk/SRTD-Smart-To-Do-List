@@ -5,13 +5,17 @@
   <% include ./partials/head %>
   <% include ./partials/header %>
 
-     <div class="list_container-back">
-        <div class="list_container-main watch">
-          <div class="list-header">
-            <p>-MOVIES TO WATCH-</p>
-          </div>
+   <div class="list_container-back">
+      <div class="list_container-main watch">
+        <form id="manual-watch" METHOD=POST action="/categories/watch" >
+          <textarea class="editHere" name="manual" placeholder="add things"></textarea>
+          <input class="submitItem" type="submit" value="add">
+        </form>
+        <div class="list-header">
+          <p>-MOVIES TO WATCH-</p>
         </div>
-    </div>
+      </div>
+  </div>
 
   </body>
 </html>

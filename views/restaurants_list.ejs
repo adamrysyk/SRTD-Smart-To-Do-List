@@ -5,12 +5,17 @@
   <% include ./partials/head %>
   <% include ./partials/header %>
 
-     <div class="list_container-back">
-        <div class="list_container-main eat">
-          <div class="list-header">
+   <div class="list_container-back">
+      <div class="list_container-main eat">
+        <form id="manual-eat" METHOD=POST action="/categories/eat" >
+          <textarea class="editHere" name="manual" placeholder="add things"></textarea>
+          <input class="submitItem" type="submit" value="add">
+        </form>
+        <div class="list-header">
           <p>-RESTAURANTS TO TRY-</p>
-          </div>
         </div>
-    </div>
+      </div>
+  </div>
+
   </body>
 </html>
