@@ -44,9 +44,9 @@ app.use('/register', registerRoutes(knex));
 app.get("/", (req, res) => {
   if (req.cookies.userID){
     if (req.cookies.messages) {
-      res.render("index", { user: req.cookies.username, messages: req.cookies.messages } );
+      res.render("index", { user: req.cookies.username } );
     }
-    res.render("index", { user: req.cookies.username, messages: false } );
+    res.render("index", { user: req.cookies.username} );
   } else {
     res.redirect("login")
   }
@@ -146,33 +146,23 @@ app.post('/logout', (req, res) => {
 
 
 app.post("/item_names", (req, res) => {
-
-
-
   var todoInput = req.body.text;
-
   if (todoInput !== "") {
-
     Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-
       result.forEach(function(searchResult) {
-
         var category = Object.keys(searchResult);
-
         if (category == 'restauraunt' && searchResult.restauraunt !== null){
           knex('items').insert({user_id: req.cookies.userID, name: searchResult.restauraunt, type: 'EAT'})
           .finally(function() {
             console.log(searchResult.restauraunt + " was sorted into restauraunts");
           });
         }
-
         if (category == 'movie' && searchResult.movie !== null){
           knex('items').insert({user_id: req.cookies.userID, name: searchResult.movie, type: 'WATCH'})
           .finally(function() {
             console.log(searchResult.movie + " was sorted into movies");
           });
         }
-
         if (category == 'book' && searchResult.book !== null){
           knex('items').insert({user_id: req.cookies.userID, name: searchResult.book, type: 'READ'})
           .finally(function() {

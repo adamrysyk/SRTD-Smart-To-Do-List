@@ -18,7 +18,7 @@ module.exports = (knex) => {
     var password = req.body.password;
     var confirm = req.body.confirm;
 
-    if(password === confirm){
+    if(password === confirm && password !== "" && email !== ""){
 
       knex
         .select("*")
@@ -26,15 +26,12 @@ module.exports = (knex) => {
         .where("username", username)
         .then((results) => {
 
-          console.log(results)
-
           if(!results[0]){
 
             knex('users')
             .returning('id')
             .insert({username: username, email: email, password: password})
             .then((results)=> {
-              console.log(results[0]);
 
               res.cookie("userID", results[0]);
               res.cookie("username", username)
@@ -42,13 +39,12 @@ module.exports = (knex) => {
 
             });
 
-          }else{
-            console.log("user already exists");
+          } else {
             res.redirect("/login");
           }
 
       });
-    }else{
+    } else {
       res.redirect("/login");
     }
 
