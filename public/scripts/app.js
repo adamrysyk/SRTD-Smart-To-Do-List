@@ -11,10 +11,6 @@ createListElement = (item) => {
 
 $(() => {
 
-  // $( ".delete-title" ).click(function() {
-  //   $(this).closest('.movie-item-container').remove();
-  // });
-
   $.ajax({
     method: "GET",
     url: "/items/watch"
@@ -49,7 +45,5 @@ $(() => {
     method: "POST",
     url: "/login"
   })
-
-
 });
 

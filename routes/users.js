@@ -9,7 +9,6 @@ const express = require('express');
 const router  = express.Router();
 const movie = require('node-movie');
 
-
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {

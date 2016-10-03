@@ -5,7 +5,6 @@
   <% include ./partials/head %>
   <% include ./partials/header %>
 
-
     <div class="container-back">
       <div class="container-main">
         <div class="add-to-do">
@@ -17,13 +16,17 @@
               placeholder="What can we store for you?"></textarea>
               <div class="btn-div"><input type="submit" value="Save it!"></div>
           </form>
+          <div class="msgCont">
+          <% if (messages) { %>
+            <% messages.map( function(message) { %>
+              <p class="msg"><%= message %></p>
+            <% }) %>
+          <% } %>
+          </div>
         </div>
       </div>
     </div>
 
-
   </body>
-
-
 
 </html>

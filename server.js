@@ -52,9 +52,12 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  if(req.cookies.userID){
-    res.render("index", { user: req.cookies.username } );
-  }else{
+  if (req.cookies.userID){
+    if (req.cookies.messages) {
+      res.render("index", { user: req.cookies.username, messages: req.cookies.messages } );
+    }
+    res.render("index", { user: req.cookies.username, messages: false } );
+  } else {
     res.redirect("login")
   }
 });
@@ -147,45 +150,57 @@ app.post("/item_names", (req, res) => {
   var todoInput = req.body.text;
 
   Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-
-    result.forEach(function(searchResult){
+    var messages = [];
+    result.forEach(function(searchResult) {
 
       var category = Object.keys(searchResult);
 
-      if(category == 'restauraunt'){
-
+      if (category == 'restauraunt'){
         knex('items').insert({user_id: req.cookies.userID, name: searchResult.restauraunt, type: 'EAT'})
+        // .then(function() {
+        //   res.cookie("messages", searchResult.restauraunt + " was sorted into restauraunts");
+        // })
         .finally(function() {
           console.log(searchResult.restauraunt + " was sorted into restauraunts");
+          messages.push(searchResult.restauraunt + " was sorted into restauraunts")
         });
 
       }
 
-      if(category == 'movie'){
-
+      if (category == 'movie'){
         knex('items').insert({user_id: req.cookies.userID, name: searchResult.movie, type: 'WATCH'})
+        // .then(function() {
+        //   res.cookie("messages", searchResult.movie + " was sorted into movies");
+        // })
         .finally(function() {
           console.log(searchResult.movie + " was sorted into movies");
+          messages.push(searchResult.movie + " was sorted into movies");
+
         });
 
       }
 
-      if(category == 'book'){
-
+      if (category == 'book'){
         knex('items').insert({user_id: req.cookies.userID, name: searchResult.book, type: 'READ'})
+        // .then(function() {
+        //   res.cookie("messages", searchResult.book + " was sorted into books");
+        // })
         .finally(function() {
           console.log(searchResult.book + " was sorted into books");
+          messages.push(searchResult.movie + " was sorted into movies");
         });
       }
-
     })
-
+    res.cookie("messages", messages);
   })
 
   res.redirect("/");
 });
 
-
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+
+
+
