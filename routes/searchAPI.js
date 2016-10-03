@@ -46,7 +46,7 @@ const searchBooks = function(todo) {
       if (todo === results[0].title) {
         resolve({book: results[0].title})
       } else {
-        resolve({book: null})
+        resolve("not found")
       }
     });
   });
