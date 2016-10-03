@@ -130,18 +130,10 @@ app.get("/categories/watch", (req, res) => {
   res.render("movies_list", { user: req.cookies.username } );
 });
 
-
 app.delete("/del/items/:cat/:id", (req, res) => {
   knex('items')
   .where('id', req.params.id)
   .del().then(function () {
-    // Promise.all()
-    // .then(function () {
-    //     return knex.destroy();
-    // })
-    // .then(function () {
-    //     console.log('all done');
-    // });
     res.redirect(`/categories/${req.params.cat}`);
   })
 });
@@ -159,52 +151,41 @@ app.post("/item_names", (req, res) => {
 
 
   var todoInput = req.body.text;
+  console.log('todoInput: ', todoInput)
+  if (todoInput !== "") {
 
-  Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
-    var messages = [];
-    result.forEach(function(searchResult) {
+    Promise.all([searchAPI.searchRestauraunt(todoInput), searchAPI.searchMovie(todoInput), searchAPI.searchBooks(todoInput)]).then(result => {
 
-      var category = Object.keys(searchResult);
+      result.forEach(function(searchResult) {
 
-      if (category == 'restauraunt'){
-        knex('items').insert({user_id: req.cookies.userID, name: searchResult.restauraunt, type: 'EAT'})
-        // .then(function() {
-        //   res.cookie("messages", searchResult.restauraunt + " was sorted into restauraunts");
-        // })
-        .finally(function() {
-          console.log(searchResult.restauraunt + " was sorted into restauraunts");
-          messages.push(searchResult.restauraunt + " was sorted into restauraunts")
-        });
+        var category = Object.keys(searchResult);
+        console.log(searchResult);
+        console.log('category', category)
 
-      }
+        if (category == 'restauraunt' && searchResult.restauraunt !== null){
+          knex('items').insert({user_id: req.cookies.userID, name: searchResult.restauraunt, type: 'EAT'})
+          .finally(function() {
+            console.log(searchResult.restauraunt + " was sorted into restauraunts");
+          });
+        }
 
-      if (category == 'movie'){
-        knex('items').insert({user_id: req.cookies.userID, name: searchResult.movie, type: 'WATCH'})
-        // .then(function() {
-        //   res.cookie("messages", searchResult.movie + " was sorted into movies");
-        // })
-        .finally(function() {
-          console.log(searchResult.movie + " was sorted into movies");
-          messages.push(searchResult.movie + " was sorted into movies");
+        if (category == 'movie' && searchResult.movie !== null){
+          knex('items').insert({user_id: req.cookies.userID, name: searchResult.movie, type: 'WATCH'})
+          .finally(function() {
+            console.log(searchResult.movie + " was sorted into movies");
+          });
+        }
 
-        });
-
-      }
-
-      if (category == 'book'){
-        knex('items').insert({user_id: req.cookies.userID, name: searchResult.book, type: 'READ'})
-        // .then(function() {
-        //   res.cookie("messages", searchResult.book + " was sorted into books");
-        // })
-        .finally(function() {
-          console.log(searchResult.book + " was sorted into books");
-          messages.push(searchResult.movie + " was sorted into movies");
-        });
-      }
+        if (category == 'book' && searchResult.book !== null){
+          knex('items').insert({user_id: req.cookies.userID, name: searchResult.book, type: 'READ'})
+          .finally(function() {
+            console.log(searchResult.book + " was sorted into books");
+          });
+        }
+      })
+      res.cookie("messages", messages);
     })
-    res.cookie("messages", messages);
-  })
-
+  }
   res.redirect("/");
 });
 
